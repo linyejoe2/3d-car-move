@@ -2,6 +2,7 @@
   "name": "3d-car-show",
   "version": "0.1.0",
   "private": true,
+  "homepage": "",
   "dependencies": {
     "@react-three/drei": "^9.66.1",
     "@react-three/fiber": "^8.13.0",
