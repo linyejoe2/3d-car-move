@@ -1,8 +1,8 @@
-import { CubeCamera, Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { CubeCamera, Environment, OrbitControls, PerspectiveCamera, Loader } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Bloom, ChromaticAberration, DepthOfField, EffectComposer } from '@react-three/postprocessing';
 import { BlendFunction } from "postprocessing"
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { DepthFormat } from 'three';
 import { Boxes } from './Boxes';
 import { Car } from './Car';
@@ -10,6 +10,10 @@ import { FloatingGrid } from './FloatingGrid';
 import { Ground } from './Ground';
 import { Rings } from './Rings';
 import "./style.css"
+// import StatsComponent from "./Stats"
+const StatsComponent = lazy(() => new Promise((resolve) =>
+  setTimeout(() => resolve(import("./Stats")), 5000)
+));
 
 function CarShow() {
   return (
@@ -63,11 +67,18 @@ function CarShow() {
 
 function App() {
   return (
-    <Suspense fallback={null}>
+    <>
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
       <Canvas shadows>
-        <CarShow></CarShow>
+        <Suspense fallback={null}>
+          <Suspense fallback={null}>
+            <StatsComponent />
+          </Suspense>
+          <CarShow></CarShow>
+        </Suspense>
       </Canvas>
-    </Suspense>
+      <Loader />
+    </>
   )
 }
 
